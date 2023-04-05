@@ -52,6 +52,10 @@ public final class Notez {
                 ntzEngine.addToCategory(argv[1],argv);
             } else if (argv[0].equals("-f")) {
                 ntzEngine.forgetNote(argv[1],Integer.parseInt(argv[2])-1); // category, index to delete
+            } else if (argv[0].equals("-e")) {
+                ntzEngine.editNote(argv[1],Integer.parseInt(argv[2])-1,argv[3]); // category, index to delete
+            } else {
+                System.out.println("Wrong argument given!");
             }
             // this should give you an idea about how to TEST the Notez engine
             // without having to spend lots of time messing with command line arguments.
@@ -60,6 +64,15 @@ public final class Notez {
          * what other method calls do you need here to implement the other commands??
          */
         ntzEngine.saveDatabase();
+    }
+
+    private void editNote(String category, int index, String newMessage) {
+        if(filemap.containsKey(category)
+            && filemap.get(category).size() > index){
+            filemap.get(category).set(index,newMessage);
+        } else {
+            System.out.println("Incorrect category given! Or index out of bound!");
+        }
     }
 
     private void forgetNote(String category, int index) {
